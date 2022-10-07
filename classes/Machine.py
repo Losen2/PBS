@@ -34,9 +34,9 @@ class leftMachine:
                 carLines[3,9] = car.inOrder
                 car.position = [3,9]
 
+
             else:
                 #在被调度的过程中算是在左机器上 position到了还是要更新
-                carLines[car.position[0],car.position[1]] = -1
                 car.position = [99,99]
                 car.pending = [[targetPosition, 9], curTime + leftTime[targetPosition]]
                 car.isMoving = True
@@ -67,13 +67,13 @@ class rightMachine:
         self.pendingTime = pending
 
     #  将任意进车道1停车位的车送入返回道1停车位或者PBS-总装接车口。
-    def dispatch(self,carLines,reverseCarLines,car,targetPosition, curTime):
+    def dispatch(self,carLines,reverseCarLines,car,targetPosition, count):
         #  送入返回道1停车位
         if(targetPosition == 6):
             carLines[car.position[0],car.position[1]] = -1
             car.isMoving = True
-            car.pending = [[targetPosition,0], curTime +returnInTime[car.position[0]]]#注意顺序
-            self.pendingTime = curTime+returnInTime[car.position[0]]
+            car.pending = [[targetPosition,0], count.time +returnInTime[car.position[0]]]#注意顺序
+            self.pendingTime = count.time+returnInTime[car.position[0]]
             car.position = [100,100]
             self.isMoving = True
 
@@ -82,14 +82,16 @@ class rightMachine:
             if(car.position[0]==3):
                 carLines[3, 0] = -1
                 car.position = [101,101]
+                count.rightCount+=1
 
             else:
                 # 在被调度的过程中算是在右机器上 position到了还是要更新
+
                 carLines[car.position[0], car.position[1]] = -1
-                car.pending = [[101, 101], curTime + rightTime[car.position[0]]]
+                car.pending = [[101, 101], count.time + rightTime[car.position[0]]]
                 car.isMoving = True
                 self.isMoving = True
-                self.pendingTime = curTime + rightTime[car.position[0]]
+                self.pendingTime = count.time + rightTime[car.position[0]]
                 car.position = [100, 100]
 
 

@@ -10,6 +10,7 @@ def randomSelect(carLines):
 def opt1Rules(opt1,energyType):
     #  优化目标1 看能否加入 能的话就更新opt1返回True，否则返回False
     #  符合条件的
+
     if(len(opt1)<2):
         opt1.append(energyType)
         return True
