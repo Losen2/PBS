@@ -49,15 +49,16 @@ def getAns(yangRunOuOrder):
     #   时间大循环
 
 
-    count = Count(rightCount=0,carListptr=0,time=0)
+    count = Count(rightCount=0,carListptr=0,time=0,returnTimes = 0)
     print("计数器初始化完成")
     opt1 = []
     opt2 = []
     print("opt1 opt2初始化完成")
 
     while(count.rightCount != len(carList)-1):
-        # if(count.time==20000):
-        #     print("sss")
+        if(count.time==20000):
+            print("异常终止")
+            break
         print("------------------------------------------------------------")
         print("当前时间是第{}秒".format(count.time),"开始进行本秒的循环测试")
         #  一、做isMoving状态的更新，两个machine+所有car
@@ -144,7 +145,7 @@ def getAns(yangRunOuOrder):
         print("到达右出口的car数量（从0起计）{}".format(count.rightCount))
         print("左边指针位置{}（最大{}，{}表示左边已经处理完）".format(count.carListptr,len(carList),len(carList)))
         print("-----------------------------------")
-    return ansList
+    return ansList,count
 
 
 ans = getAns(yangRunOuOrder)

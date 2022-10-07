@@ -2,8 +2,10 @@ class Count:
     rightCount = 0  # 到达最右边的车辆个数
     carListptr = 0  # 左边的入口现在堆放的是第几辆车
     time = 0
+    returnTimes = 0
 
-    def __init__(self,rightCount,carListptr,time):
+    def __init__(self,rightCount,carListptr,time,returnTimes):
         self.rightCount = rightCount
         self.carListptr = carListptr
         self.time = time
+        self.returnTimes = returnTimes

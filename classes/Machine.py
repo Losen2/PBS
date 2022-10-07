@@ -76,6 +76,7 @@ class RightMachine:
             self.pendingTime = count.time+returnInTime[car.position[0]]
             car.position = [100,100]
             self.isMoving = True
+            count.returnTimes+=1
 
         #  送入总装接口
         elif(targetPosition == 101):
