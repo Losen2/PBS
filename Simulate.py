@@ -55,7 +55,7 @@ def getAns(yangRunOuOrder):
     opt2 = []
     print("opt1 opt2初始化完成")
 
-    while(count.rightCount != len(carList)-1):
+    while(count.rightCount < len(carList)):
         if(count.time==20000):
             print("异常终止")
             break
