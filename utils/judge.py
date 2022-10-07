@@ -27,7 +27,7 @@ def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder)
 
 
 
-def judgeRight(reverseCarLines,carLines,rightMachine,carList,count,opt1,opt2):
+def judgeRight(reverseCarLines,carLines,rightMachine,carList,count,opt1,opt2,ansList):
     if(carLines[:,0].sum()==-6):
         print("右机器没有可以进行的操作 跳过")
         print(carLines)
@@ -37,13 +37,13 @@ def judgeRight(reverseCarLines,carLines,rightMachine,carList,count,opt1,opt2):
     for i in range(0, 6):
         if (carLines[i][0] != -1 and opt1Rules(opt1, carList[carLines[i][0]].energyType)):
             flag1=1
-            rightMachine.dispatch(carLines, reverseCarLines, carList[carLines[i][0]], 101, count)
+            rightMachine.dispatch(carLines, reverseCarLines, carList[carLines[i][0]], 101, count,ansList)
             break
     if(flag1==0):#没有满足条件1的
         for i in range(0, 6):
             if (carLines[i][0] != -1 and opt2Rules(opt2, carList[carLines[i][0]].energyNum)):
                 flag2=0
-                rightMachine.dispatch(carLines, reverseCarLines, carList[carLines[i][0]], 101, count)
+                rightMachine.dispatch(carLines, reverseCarLines, carList[carLines[i][0]], 101, count,ansList)
                 break
     if(flag1==0 and flag2==0):#没满足1也没满足2
         arr = []
@@ -56,4 +56,4 @@ def judgeRight(reverseCarLines,carLines,rightMachine,carList,count,opt1,opt2):
             for ar in arr:
                 if ar[1]<=min:
                     obj = ar[0]#最早到达的 carLines[i][0]=-1会触发语法糖问题
-            rightMachine.dispatch(carLines, reverseCarLines, obj, 101, count)
+            rightMachine.dispatch(carLines, reverseCarLines, obj, 101, count,ansList)

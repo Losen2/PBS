@@ -7,7 +7,7 @@ returnOutTime = [24, 18, 12, 6, 12, 18]
 #右机械把car运到返回道的时间
 returnInTime = [24, 18, 12, 6, 12, 18]
 
-class leftMachine:
+class LeftMachine:
     # 接车横移机
     isMoving = False  # 此刻是否正在移动
 
@@ -56,7 +56,7 @@ class leftMachine:
 
 
 
-class rightMachine:
+class RightMachine:
     # 送车横移机
     isMoving = False  # 此刻是否正在移动
 
@@ -67,7 +67,7 @@ class rightMachine:
         self.pendingTime = pending
 
     #  将任意进车道1停车位的车送入返回道1停车位或者PBS-总装接车口。
-    def dispatch(self,carLines,reverseCarLines,car,targetPosition, count):
+    def dispatch(self,carLines,reverseCarLines,car,targetPosition, count,ansList):
         #  送入返回道1停车位
         if(targetPosition == 6):
             carLines[car.position[0],car.position[1]] = -1
@@ -83,6 +83,7 @@ class rightMachine:
                 carLines[3, 0] = -1
                 car.position = [101,101]
                 count.rightCount+=1
+                ansList.append(car)
 
             else:
                 # 在被调度的过程中算是在右机器上 position到了还是要更新
