@@ -9,7 +9,7 @@ from utils.commonUtils import opt1Rules,opt2Rules
 from utils.count import Count
 from utils.judge import judgeLeft,judgeRight
 import logging
-
+logging.basicConfig(filename='test.log', level=logging.DEBUG)
 
 
 yangRunOuOrder = np.full(10,3,int) # 模拟杨润鸥给的序列
@@ -49,16 +49,15 @@ def getAns(yangRunOuOrder):
     #   时间大循环
 
 
-    count = Count(rightCount=0,carListptr=0,time=0)
+    count = Count(rightCount=0,carListptr=0,time=0,returnTimes=0)
     print("计数器初始化完成")
     opt1 = []
     opt2 = []
     print("opt1 opt2初始化完成")
 
-    while(count.rightCount != len(carList)-1):
-        if(count.time==20000):
-            print("异常终止")
-            break
+    while(count.rightCount < len(carList)):
+        if(count.time%9==0):
+            logging.debug(carLines)
         print("------------------------------------------------------------")
         print("当前时间是第{}秒".format(count.time),"开始进行本秒的循环测试")
         #  一、做isMoving状态的更新，两个machine+所有car
