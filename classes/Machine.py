@@ -15,6 +15,7 @@ class LeftMachine:
 
     def __init__(self, isMoving, pending):
         self.isMoving = isMoving
+
         self.pendingTime = pending
 
     def dispatch(self,carLines,reverseCarLines,car,targetPosition, curTime):

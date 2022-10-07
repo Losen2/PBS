@@ -9,7 +9,7 @@ from utils.commonUtils import opt1Rules,opt2Rules
 from utils.count import Count
 from utils.judge import judgeLeft,judgeRight
 import logging
-logging.basicConfig(filename='test.log', level=logging.DEBUG)
+logging.basicConfig(filename='totalEasyTest.log', level=logging.DEBUG)
 
 
 yangRunOuOrder = np.full(10,3,int) # 模拟杨润鸥给的序列
@@ -20,7 +20,7 @@ print(yangRunOuOrder)
 def getAns(yangRunOuOrder):
     # 初始化成car实例放在list里，初始位置(98, 98)
     carList = []
-    data = pd.read_csv('test1.csv')
+    data = pd.read_csv('test/test1.csv')
     ansList = []
 
     for i in range(0, 10):
@@ -56,8 +56,7 @@ def getAns(yangRunOuOrder):
     print("opt1 opt2初始化完成")
 
     while(count.rightCount < len(carList)):
-        if(count.time%9==0):
-            logging.debug(carLines)
+
         print("------------------------------------------------------------")
         print("当前时间是第{}秒".format(count.time),"开始进行本秒的循环测试")
         #  一、做isMoving状态的更新，两个machine+所有car
