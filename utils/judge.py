@@ -1,13 +1,15 @@
 from utils.commonUtils import randomSelect
 from utils.commonUtils import opt1Rules,opt2Rules
 from utils.commonUtils import isThereAnswer
-
+import numpy as np
 
 def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder):
 
     # 返回车道10（index 9）有车 优先处理
     if (reverseCarLines[9] != -1):
         car = carList[reverseCarLines[9]]
+        if (np.all(carLines[:, 9] != -1)):
+            return -1
         leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
 
     # 处理涂装 - PBS出车口上的车
@@ -56,7 +58,7 @@ def judgeRight(reverseCarLines,carLines,rightMachine,carList,count,opt1,opt2,ans
             for ar in arr:
                 if ar[1]<=min:
                     obj = ar[0]#最早到达的 carLines[i][0]=-1会触发语法糖问题
-            if(isThereAnswer(carLines,carList,opt1,opt2)):
+            if(isThereAnswer(carLines,carList,opt1,opt2) and reverseCarLines[0]==-1):
                 rightMachine.dispatch(carLines, reverseCarLines, obj, 6, count, ansList)
             else:
                 rightMachine.dispatch(carLines, reverseCarLines, obj, 101, count,ansList)
