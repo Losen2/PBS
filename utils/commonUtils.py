@@ -144,3 +144,19 @@ def isTopAnswer(carLines,carList,opt1,opt2):
                     return True
                 break
     return False
+
+
+def step1(carLines,car,carList):#题2的step1
+    for i in range(carLines.shape[0]):
+        for j in range(carLines.shape[1]):
+            if(carLines[i][carLines.shape[1]-1-j]!=-1 and carList[carLines[i][carLines.shape[1]-1-j]].energyType==car.energyType):
+                return False
+
+    return True
+
+def step2(carLines,car,carList):#题2的step2
+    for i in range(carLines.shape[0]):
+        for j in range(carLines.shape[1]):
+            if(carLines[i][carLines.shape[1]-1-j]!=-1 and carList[carLines[i][carLines.shape[1]-1-j]].energyNum==car.energyNum):
+                return False
+    return True

@@ -1,6 +1,6 @@
 from utils.commonUtils import randomSelect
 from utils.commonUtils import opt1Rules,opt2Rules
-from utils.commonUtils import isThereAnswer,isTopAnswer
+from utils.commonUtils import isThereAnswer,isTopAnswer,step1,step2
 import numpy as np
 
 def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder):
@@ -12,10 +12,24 @@ def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder)
         car = carList[reverseCarLines[9]]
         if(np.all(carLines[:,9]!=-1)):
             return -1
-        # elif():#step1
-        #     print('a')
-        # elif():#step2
-        #     print('a')
+        elif(step1(carLines,car,carList)):#step1
+            temp = carLines.copy()
+            zeros = np.ones(temp.shape)
+            cond1 = temp<0
+            temp = np.where(cond1,temp,zeros)
+            flag = np.argmin(temp.sum(axis=-1))
+            if(carLines[flag][9]==-1):
+                leftMachine.dispatch(carLines, reverseCarLines, car, flag, count.time)
+
+        elif(step2(carLines,car,carList)):#step2
+            temp = carLines.copy()
+            zeros = np.ones(temp.shape)
+            cond1 = temp < 0
+            temp = np.where(cond1, temp, zeros)
+            flag = np.argmin(temp.sum(axis=-1))
+            if (carLines[flag][9] == -1):
+                leftMachine.dispatch(carLines, reverseCarLines, car, flag, count.time)
+
         elif (carLines[yangRunOuOrder[car.inOrder], 9] == -1):
             leftMachine.dispatch(carLines, reverseCarLines, car, yangRunOuOrder[car.inOrder], count.time)
         else:
