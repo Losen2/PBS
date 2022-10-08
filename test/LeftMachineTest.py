@@ -3,7 +3,7 @@ from classes.Car import Car
 from classes.Machine import LeftMachine
 
 
-'''测试1
+#测试1
 leftMachine = LeftMachine(isMoving=False,pending=-1)
 carLines = np.full((10,10),-1,int)
 reverseCarLines = np.full(10,-1,int)
@@ -18,9 +18,9 @@ car = Car(inOrder=0,
           )
 targetPosition = 3
 curTime = 10
-'''
 
-'''测试2
+
+'''#测试2
 leftMachine = LeftMachine(isMoving=False,pending=-1)
 carLines = np.full((10,10),-1,int)
 reverseCarLines = np.full(10,-1,int)
@@ -37,7 +37,7 @@ targetPosition = 2
 curTime = 10
 '''
 
-#测试3
+'''#测试3
 leftMachine = LeftMachine(isMoving=False,pending=-1)
 carLines = np.full((10,10),-1,int)
 reverseCarLines = np.full(10,-1,int)
@@ -53,7 +53,7 @@ car = Car(inOrder=0,
           )
 targetPosition = 2
 curTime = 10
-
+'''
 
 
 #-----------------测试-------------------
