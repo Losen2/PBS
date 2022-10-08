@@ -71,16 +71,16 @@ def opt2Rules(opt2,energyNum):
         return False
 
 def isThereAnswer(carLines,carList,opt1,opt2):
-    temp1 = opt1
-    temp2 = opt2
+    temp1 = opt1[:]
+    temp2 = opt2[:]
     for i in range(carLines.shape[0]):
         for j in range(carLines.shape[1]):
 
             if(opt1Rules(opt1,carList[carLines[i][j]])):#注意还原，我们上面两个rules都是会改变原来的
                 opt1.clear()
-                opt1.append(temp1)
+                opt1.extend(temp1)
                 return True
             elif(opt2Rules(opt2,carList[carLines[i][j]])):
                 opt2.clear()
-                opt2.append(temp2)
+                opt2.extend(temp2)
                 return True
