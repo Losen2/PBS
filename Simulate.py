@@ -120,7 +120,8 @@ def getAns(yangRunOuOrder):
             for car in carList:
                 temp.append(resultMap[str(car.position)])
             recordcsv[count.time] = temp
-    recordcsv.to_csv("answerOfQues1.csv")
+    if (recordingFlag):
+        recordcsv.to_csv("answerOfQues1.csv")
 
 
     return ansList,count
