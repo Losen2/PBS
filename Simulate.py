@@ -9,7 +9,8 @@ from utils.judge import judgeLeft,judgeRight
 import logging
 from utils.updateOfAll import update
 from utils.carMoving import carMoving
-logging.basicConfig(filename='example.log', level=logging.DEBUG)
+from utils.resultMap import resultMap
+# logging.basicConfig(filename='example.log', level=logging.DEBUG)
 
 
 yangRunOuOrder = np.random.randint(0, 6, (318,))  # 模拟杨润鸥给的序列
@@ -18,7 +19,7 @@ print("杨润鸥序列为")
 print(yangRunOuOrder)
 
 
-
+recordingFlag = False#输出结果的标志位 训练时请关闭
 def getAns(yangRunOuOrder):
     # 初始化成car实例放在list里，初始位置(98, 98)
     carList = []
@@ -56,6 +57,9 @@ def getAns(yangRunOuOrder):
     opt1 = []
     opt2 = []
     print("opt1 opt2初始化完成")
+
+    # 生成题目所需要求的答案
+    recordcsv = pd.DataFrame()
 
     while(count.rightCount < len(carList)):
         if(count.time==20000):
@@ -110,6 +114,15 @@ def getAns(yangRunOuOrder):
         print("到达右出口的car数量（从0起计）{}".format(count.rightCount))
         print("左边指针位置{}（最大{}，{}表示左边已经处理完）".format(count.carListptr,len(carList),len(carList)))
         print("-----------------------------------")
+        #题目要求的输出
+        if(recordingFlag):
+            temp = []
+            for car in carList:
+                temp.append(resultMap[str(car.position)])
+            recordcsv[count.time] = temp
+    recordcsv.to_csv("answerOfQues1.csv")
+
+
     return ansList,count
 
 
