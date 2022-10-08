@@ -1,8 +1,10 @@
 from utils.commonUtils import randomSelect
 from utils.commonUtils import opt1Rules,opt2Rules
-
+from utils.commonUtils import isThereAnswer
+import numpy as np
 
 def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder):
+
 
 
     # 处理涂装 - PBS出车口上的车
@@ -16,10 +18,13 @@ def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder)
             leftMachine.dispatch(carLines, reverseCarLines, car, yangRunOuOrder[count.carListptr], count.time)
 
         count.carListptr += 1
-        # 返回车道10（index 9）有车 未必优先处理（这是第二题的分支）
+    # 返回车道10（index 9）有车
     elif (reverseCarLines[9] != -1):
-        car = carLines[reverseCarLines[9]]
-        leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
+        car = carList[reverseCarLines[9]]
+        if(np.all(carLines[:,9]!=-1)):
+            return -1
+        else:
+            leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
 
     else:
         return -1
@@ -49,10 +54,14 @@ def judgeRight(reverseCarLines,carLines,rightMachine,carList,count,opt1,opt2,ans
         for i in range(0, 6):
             if (carLines[i][0] != -1):
                 arr.append([carList[carLines[i][0]],carList[carLines[i][0]].arriveTime])
+        #arr为1号位置为-1的车
         if len(arr)!=0:
             min = arr[0][1]
             obj = None
             for ar in arr:
                 if ar[1]<=min:
                     obj = ar[0]#最早到达的 carLines[i][0]=-1会触发语法糖问题
-            rightMachine.dispatch(carLines, reverseCarLines, obj, 101, count,ansList)
+            if(isThereAnswer(carLines,carList,opt1,opt2)):
+                rightMachine.dispatch(carLines, reverseCarLines, obj, 6, count, ansList)
+            else:
+                rightMachine.dispatch(carLines, reverseCarLines, obj, 101, count,ansList)
