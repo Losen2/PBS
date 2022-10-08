@@ -1,6 +1,6 @@
 
 
-def update(carList,carLines,reverseCarLines,ansList,leftMachine,rightMachine,count):
+def update(carList,carLines,reverseCarLines,ansList,leftMachine,rightMachine,count,opt1,opt2):
     for car in carList:
 
         if (car.isMoving and count.time == car.pending[1]):
@@ -12,6 +12,8 @@ def update(carList,carLines,reverseCarLines,ansList,leftMachine,rightMachine,cou
             if (car.pending[0] == [101, 101]):
                 count.rightCount += 1
                 ansList.append(car)
+                opt1.append(car.energyType)
+                opt2.append(car.energyNum)
             car.isMoving = False
             car.position = car.pending[0]
             if (car.pending[0][0] != 6 and car.pending[0][0] < 10):

@@ -68,7 +68,7 @@ class RightMachine:
         self.pendingTime = pending
 
     #  将任意进车道1停车位的车送入返回道1停车位或者PBS-总装接车口。
-    def dispatch(self,carLines,reverseCarLines,car,targetPosition, count,ansList):
+    def dispatch(self,carLines,reverseCarLines,car,targetPosition, count,ansList,opt1,opt2):
         #  送入返回道1停车位
         if(targetPosition == 6):
             carLines[car.position[0],car.position[1]] = -1
@@ -87,6 +87,8 @@ class RightMachine:
                 car.arriveTime = count.time
                 count.rightCount+=1
                 ansList.append(car)
+                opt1.append(car.energyType)
+                opt2.append(car.energyNum)
 
             else:
                 # 在被调度的过程中算是在右机器上 position到了还是要更新
