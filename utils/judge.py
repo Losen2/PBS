@@ -1,14 +1,21 @@
 from utils.commonUtils import randomSelect
 from utils.commonUtils import opt1Rules,opt2Rules
-from utils.commonUtils import isThereAnswer
+from utils.commonUtils import isThereAnswer,isTopAnswer
 import numpy as np
 
 def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder):
 
 
 
+    # 返回车道10（index 9）有车
+    if (reverseCarLines[9] != -1):
+        car = carList[reverseCarLines[9]]
+        if(np.all(carLines[:,9]!=-1)):
+            return -1
+        else:
+            leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
     # 处理涂装 - PBS出车口上的车
-    if(count.carListptr<len(carList)):
+    elif(count.carListptr<len(carList)):
         car = carList[count.carListptr]
         if (carLines[yangRunOuOrder[count.carListptr], 9] != -1):
             # leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
@@ -18,13 +25,7 @@ def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder)
             leftMachine.dispatch(carLines, reverseCarLines, car, yangRunOuOrder[count.carListptr], count.time)
 
         count.carListptr += 1
-    # 返回车道10（index 9）有车
-    elif (reverseCarLines[9] != -1):
-        car = carList[reverseCarLines[9]]
-        if(np.all(carLines[:,9]!=-1)):
-            return -1
-        else:
-            leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
+
 
     else:
         return -1
@@ -38,6 +39,7 @@ def judgeRight(reverseCarLines,carLines,rightMachine,carList,count,opt1,opt2,ans
         return -1
     flag1=0
     flag2=0
+    flag3=0
     for i in range(0, 6):
         if (carLines[i][0] != -1 and opt1Rules(opt1, carList[carLines[i][0]].energyType)):
             flag1=1
@@ -50,6 +52,10 @@ def judgeRight(reverseCarLines,carLines,rightMachine,carList,count,opt1,opt2,ans
                 rightMachine.dispatch(carLines, reverseCarLines, carList[carLines[i][0]], 101, count,ansList)
                 break
     if(flag1==0 and flag2==0):#没满足1也没满足2
+        if (isTopAnswer(carLines, carList, opt1, opt2) and reverseCarLines[0] == -1):
+            print("第一位有解，跳过")
+            return -1
+    if(flag1==0 and flag2==0 and flag3==0):#没满足1也没满足2也没3
         arr = []
         for i in range(0, 6):
             if (carLines[i][0] != -1):
