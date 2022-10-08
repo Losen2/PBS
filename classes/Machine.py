@@ -15,7 +15,6 @@ class LeftMachine:
 
     def __init__(self, isMoving, pending):
         self.isMoving = isMoving
-
         self.pendingTime = pending
 
     def dispatch(self,carLines,reverseCarLines,car,targetPosition, curTime):
@@ -34,6 +33,7 @@ class LeftMachine:
                 #调度的时候机器必然是空闲的所以isMoving不用恢复空闲,car.isMoving同理
                 carLines[3,9] = car.inOrder
                 car.position = [3,9]
+                car.arriveTime = curTime
 
 
             else:
@@ -84,6 +84,7 @@ class RightMachine:
             if(car.position[0]==3):
                 carLines[3, 0] = -1
                 car.position = [101,101]
+                car.arriveTime = count.time
                 count.rightCount+=1
                 ansList.append(car)
 
