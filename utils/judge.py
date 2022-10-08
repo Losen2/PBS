@@ -4,13 +4,9 @@ from utils.commonUtils import opt1Rules,opt2Rules
 
 def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder):
 
-    # 返回车道10（index 9）有车 优先处理
-    if (reverseCarLines[9] != -1):
-        car = carLines[reverseCarLines[9]]
-        leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
 
     # 处理涂装 - PBS出车口上的车
-    elif(count.carListptr<len(carList)):
+    if(count.carListptr<len(carList)):
         car = carList[count.carListptr]
         if (carLines[yangRunOuOrder[count.carListptr], 9] != -1):
             # leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
@@ -20,6 +16,11 @@ def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder)
             leftMachine.dispatch(carLines, reverseCarLines, car, yangRunOuOrder[count.carListptr], count.time)
 
         count.carListptr += 1
+        # 返回车道10（index 9）有车 未必优先处理（这是第二题的分支）
+    elif (reverseCarLines[9] != -1):
+        car = carLines[reverseCarLines[9]]
+        leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
+
     else:
         return -1
 
