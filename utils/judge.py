@@ -42,13 +42,15 @@ def judgeRight(reverseCarLines,carLines,rightMachine,carList,count,opt1,opt2,ans
     for i in range(0, 6):
         if (carLines[i][0] != -1 and opt1Rules(opt1, carList[carLines[i][0]].energyType)):
             flag1=1
-            rightMachine.dispatch(carLines, reverseCarLines, carList[carLines[i][0]], 101, count,ansList)
+
+            rightMachine.dispatch(carLines, reverseCarLines, carList[carLines[i][0]], 101, count,ansList,opt1,opt2)
             break
     if(flag1==0):#没有满足条件1的
         for i in range(0, 6):
             if (carLines[i][0] != -1 and opt2Rules(opt2, carList[carLines[i][0]].energyNum)):
-                flag2=0
-                rightMachine.dispatch(carLines, reverseCarLines, carList[carLines[i][0]], 101, count,ansList)
+                flag2=1
+
+                rightMachine.dispatch(carLines, reverseCarLines, carList[carLines[i][0]], 101, count,ansList,opt1,opt2)
                 break
     if(flag1==0 and flag2==0):#没满足1也没满足2
         arr = []
@@ -63,6 +65,6 @@ def judgeRight(reverseCarLines,carLines,rightMachine,carList,count,opt1,opt2,ans
                 if ar[1]<=min:
                     obj = ar[0]#最早到达的 carLines[i][0]=-1会触发语法糖问题
             if(isThereAnswer(carLines,carList,opt1,opt2) and reverseCarLines[0]==-1):
-                rightMachine.dispatch(carLines, reverseCarLines, obj, 6, count, ansList)
+                rightMachine.dispatch(carLines, reverseCarLines, obj, 6, count, ansList,opt1,opt2)
             else:
-                rightMachine.dispatch(carLines, reverseCarLines, obj, 101, count,ansList)
+                rightMachine.dispatch(carLines, reverseCarLines, obj, 101, count,ansList,opt1,opt2)

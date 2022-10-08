@@ -8,10 +8,11 @@ def randomSelect(carLines):
             return ans
 
 def opt1Rules(opt1,energyType):
-    #  优化目标1 看能否加入 能的话就更新opt1返回True，否则返回False
+    #  优化目标1 看能否加入 能的话就返回True，否则返回False
     #  符合条件的
 
     # 每次调用的时候把开头为燃油的这种情形去掉
+    temp = opt1[:]
 
     if(len(opt1)>0 and opt1[0]!="混动" and "混动" in opt1):
         opt1 = opt1[opt1.index('混动'):]
@@ -20,7 +21,8 @@ def opt1Rules(opt1,energyType):
 
 
     if(len(opt1)==0):
-        opt1.append(energyType)
+        opt1.clear()
+        opt1.extend(temp)
         return True
 
     if(energyType=='混动'):
@@ -33,7 +35,8 @@ def opt1Rules(opt1,energyType):
                 if(num!=2):
                     return False
                 else:
-                    opt1.append(energyType)
+                    opt1.clear()
+                    opt1.extend(temp)
                     return True
     else:#eneryType为燃油
         i = -1
@@ -45,42 +48,88 @@ def opt1Rules(opt1,energyType):
                 if (num > 2):
                     return False
                 else:
-                    opt1.append(energyType)
+                    opt1.clear()
+                    opt1.extend(temp)
                     return True
 
 
 
 
 def opt2Rules(opt2,energyNum):
-    #  区别于opt1 opt2内我们留的是现存的还没分块好的序列
-    #  根据我们的写法 不会出现2244新增2的情况 因为2244满足的时候会被移除
-    num1 = opt2.count(energyNum)#四驱还是两驱
-    num2 = len(opt2) - num1
-    if(num2==0):
-        opt2.append(energyNum)
-        return True
-    if(num1<num2):
-        # 首先不可能22444的情况加2，所以
-        if(num1+1==num2):
-            opt2.clear()
-            return True
-        opt2.append(energyNum)
-        return True
-    if(num1>num2):
-        # 首先不可能出现22444的情况加4 那么只可能出现44422的情况下加4 这种是false
-        return False
 
+    temp=opt2[:]#做个标记 下面把opt2切割成余块
+    if(len(opt2)==0):
+        return True
+
+    if(opt2.count('两驱')==len(opt2) or opt2.count('四驱')==len(opt2)):#只有一种的 直接ok
+        return True
+
+    fg1=opt2[0]
+    if(fg1=='四驱'):
+        fg2 = '两驱'
+    else:
+        fg2='四驱'
+
+    while(True):
+        if((opt2.count('两驱')==len(opt2) or opt2.count('四驱')==len(opt2)) or isPair(opt2)):
+            break
+        opt2 = opt2[opt2.index(fg2):]
+        opt2 = opt2[opt2.index(fg1):]#每次都切两刀
+
+    #对切割后的对子做判断
+    num1 = opt2[0]  # 四驱还是两驱
+    if(num1=='四驱'):
+        num2  = '两驱'
+    else:
+        num2 = '四驱'
+    if (opt2.count(num1) < opt2.count(num2)):
+        if (energyNum == num1):
+            opt2.clear()
+            opt2.extend(temp)
+            return True
+        else:
+            opt2.clear()
+            opt2.extend(temp)
+            return False
+    elif(opt2.count(num1) == opt2.count(num2)):
+        if (energyNum == num1):
+            opt2.clear()
+            opt2.extend(temp)
+            return True
+        else:
+            return False
+    else:
+        if(energyNum == num2):
+            opt2.clear()
+            opt2.extend(temp)
+            return True
+        else:
+            return False
+def isPair(opt2):
+    #判断切下的序列是否为4422 22244这种不含波动的纯对子 222这种纯数字和长度为0的在opt2Rules里完成校验
+    temp=opt2[:]
+    fg1 = opt2[0]
+    if(fg1=='两驱'):
+        index = opt2.index('四驱')
+        fg2='四驱'
+    else:
+        index = opt2.index('两驱')
+        fg2 = '两驱'
+    if(opt2[index:].count(fg2)==len(opt2[index:])):
+        opt2.clear()
+        opt2.extend(temp)
+        return True
+    else:
+        opt2.clear()
+        opt2.extend(temp)
+        return False
 def isThereAnswer(carLines,carList,opt1,opt2):
-    temp1 = opt1[:]
-    temp2 = opt2[:]
+
     for i in range(carLines.shape[0]):
         for j in range(carLines.shape[1]):
+            if(carLines[i][j]!=-1 and opt1Rules(opt1,carList[carLines[i][j]].energyType)):#会触发-1语法糖
+                return True
+            elif(carLines[i][j]!=-1 and opt2Rules(opt2,carList[carLines[i][j]].energyNum)):
+                return True
 
-            if(opt1Rules(opt1,carList[carLines[i][j]])):#注意还原，我们上面两个rules都是会改变原来的
-                opt1.clear()
-                opt1.extend(temp1)
-                return True
-            elif(opt2Rules(opt2,carList[carLines[i][j]])):
-                opt2.clear()
-                opt2.extend(temp2)
-                return True
+    return False

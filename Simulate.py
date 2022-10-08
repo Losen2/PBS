@@ -62,14 +62,17 @@ def getAns(yangRunOuOrder):
     recordcsv = pd.DataFrame()
 
     while(count.rightCount < len(carList)):
-        # if(count.time==20000):
-        #     print("异常终止")
+        if(count.time==10000):
+             print("异常终止")
         #     break
+        print("opt-------------------")
+        print(opt1)
+        print(opt2)
         print("------------------------------------------------------------")
         print("当前时间是第{}秒".format(count.time),"开始进行本秒的循环测试")
         #  一、做isMoving状态的更新，两个machine+所有car
         print("开始做两个machine+所有car的状态的更新")
-        update(carList, carLines, reverseCarLines, ansList, leftMachine, rightMachine, count)
+        update(carList, carLines, reverseCarLines, ansList, leftMachine, rightMachine, count,opt1,opt2)
 
         #  二、检查左机器是否空闲并决定是否分配任务
         print("开始为左机器分配任务")
