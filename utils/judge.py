@@ -3,9 +3,7 @@ from utils.commonUtils import opt1Rules,opt2Rules
 
 
 def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder):
-    if(reverseCarLines[9]==-1 and count.rightCount==len(carLines)):
-        print("左机器没有可以进行的操作 跳过")
-        return -1
+
     # 返回车道10（index 9）有车 优先处理
     if (reverseCarLines[9] != -1):
         car = carLines[reverseCarLines[9]]
