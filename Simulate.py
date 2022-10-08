@@ -65,8 +65,7 @@ def getAns(yangRunOuOrder):
         if(count.time%4==0):
             print("opt------------")
             print(opt1)
-            if(opt1==[[...]] or opt2==[[...]]):
-                print(opt2)
+            print(opt2)
             # break
         print("------------------------------------------------------------")
         print("当前时间是第{}秒".format(count.time),"开始进行本秒的循环测试")
