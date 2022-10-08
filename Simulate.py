@@ -62,9 +62,9 @@ def getAns(yangRunOuOrder):
     recordcsv = pd.DataFrame()
 
     while(count.rightCount < len(carList)):
-        if(count.time==20000):
-            print("异常终止")
-            break
+        # if(count.time==20000):
+        #     print("异常终止")
+        #     break
         print("------------------------------------------------------------")
         print("当前时间是第{}秒".format(count.time),"开始进行本秒的循环测试")
         #  一、做isMoving状态的更新，两个machine+所有car
@@ -120,7 +120,8 @@ def getAns(yangRunOuOrder):
             for car in carList:
                 temp.append(resultMap[str(car.position)])
             recordcsv[count.time] = temp
-    recordcsv.to_csv("answerOfQues1.csv")
+    if (recordingFlag):
+        recordcsv.to_csv("answerOfQues1.csv")
 
 
     return ansList,count
