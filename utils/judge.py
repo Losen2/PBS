@@ -12,28 +12,10 @@ def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder)
         car = carList[reverseCarLines[9]]
         if(np.all(carLines[:,9]!=-1)):
             return -1
-        elif(step1(carLines,car,carList)):#step1
-            temp = carLines.copy()
-            zeros = np.ones(temp.shape)
-            cond1 = temp<0
-            temp = np.where(cond1,temp,zeros)
-            flag = np.argmin(temp.sum(axis=-1))
-            if(carLines[flag][9]==-1):
-                leftMachine.dispatch(carLines, reverseCarLines, car, flag, count.time)
 
-        elif(step2(carLines,car,carList)):#step2
-            temp = carLines.copy()
-            zeros = np.ones(temp.shape)
-            cond1 = temp < 0
-            temp = np.where(cond1, temp, zeros)
-            flag = np.argmin(temp.sum(axis=-1))
-            if (carLines[flag][9] == -1):
-                leftMachine.dispatch(carLines, reverseCarLines, car, flag, count.time)
-
-        elif (carLines[yangRunOuOrder[car.inOrder], 9] == -1):
-            leftMachine.dispatch(carLines, reverseCarLines, car, yangRunOuOrder[car.inOrder], count.time)
         else:
-            return -1
+            leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
+
     # 处理涂装 - PBS出车口上的车
     elif(count.carListptr<len(carList)):
         car = carList[count.carListptr]
