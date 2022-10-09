@@ -10,11 +10,10 @@ def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder)
         car = carList[reverseCarLines[9]]
         if (np.all(carLines[:, 9] != -1)):
             return -1
-        elif(carLines[yangRunOuOrder[car.inOrder],9]==-1):
-            # leftMachine.dispatch(carLines, reverseCarLines, car, yangRunOuOrder[car.inOrder], count.time)
-            leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
         else:
-            return -1
+            leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
+
+
 
 
     # 处理涂装 - PBS出车口上的车
