@@ -11,7 +11,8 @@ def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder)
         if (np.all(carLines[:, 9] != -1)):
             return -1
         elif(carLines[yangRunOuOrder[car.inOrder],9]==-1):
-            leftMachine.dispatch(carLines, reverseCarLines, car, yangRunOuOrder[car.inOrder], count.time)
+            # leftMachine.dispatch(carLines, reverseCarLines, car, yangRunOuOrder[car.inOrder], count.time)
+            leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
         else:
             return -1
 
@@ -20,7 +21,6 @@ def judgeLeft(reverseCarLines,carLines,leftMachine,carList,count,yangRunOuOrder)
     elif(count.carListptr<len(carList)):
         car = carList[count.carListptr]
         if (carLines[yangRunOuOrder[count.carListptr], 9] != -1):
-            # leftMachine.dispatch(carLines, reverseCarLines, car, randomSelect(carLines), count.time)
             print("序列被占用，左机器等待")
             return -1
         else:
