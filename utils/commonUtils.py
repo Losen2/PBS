@@ -14,42 +14,39 @@ def opt1Rules(opt1,energyType):
     # 每次调用的时候把开头为燃油的这种情形去掉
     temp = opt1[:]
 
-    if(len(opt1)>0 and opt1[0]!="混动" and "混动" in opt1):
-        opt1 = opt1[opt1.index('混动'):]
-    elif(len(opt1)>0 and opt1[0]!="混动"):
-        opt1.clear()
+    if(len(temp)>0 and temp[0]!="混动" and "混动" in temp):
+        temp = temp[temp.index('混动'):]
+    elif(len(temp)>0 and temp[0]!="混动"):
+        temp.clear()
 
 
-    if(len(opt1)==0):
-        opt1.clear()
-        opt1.extend(temp)
+    if(len(temp)==0):
+
         return True
 
     if(energyType=='混动'):
         i = -1
         while(True):
-            if(opt1[i]!='混动'):#一定能找到这个一开始的混动车型
+            if(temp[i]!='混动'):#一定能找到这个一开始的混动车型
                 i-=1
             else:
                 num = -i-1
                 if(num!=2):
                     return False
                 else:
-                    opt1.clear()
-                    opt1.extend(temp)
+
                     return True
     else:#eneryType为燃油
         i = -1
         while (True):
-            if (opt1[i] != '混动'):  # 一定能找到这个一开始的混动车型
+            if (temp[i] != '混动'):  # 一定能找到这个一开始的混动车型
                 i -= 1
             else:
                 num = -i
                 if (num > 2):
                     return False
                 else:
-                    opt1.clear()
-                    opt1.extend(temp)
+
                     return True
 
 
@@ -58,50 +55,46 @@ def opt1Rules(opt1,energyType):
 def opt2Rules(opt2,energyNum):
 
     temp=opt2[:]#做个标记 下面把opt2切割成余块
-    if(len(opt2)==0):
+    if(len(temp)==0):
         return True
 
-    if(opt2.count('两驱')==len(opt2) or opt2.count('四驱')==len(opt2)):#只有一种的 直接ok
+    if(temp.count('两驱')==len(temp) or temp.count('四驱')==len(temp)):#只有一种的 直接ok
         return True
 
-    fg1=opt2[0]
+    fg1=temp[0]
     if(fg1=='四驱'):
         fg2 = '两驱'
     else:
         fg2='四驱'
 
     while(True):
-        if((opt2.count('两驱')==len(opt2) or opt2.count('四驱')==len(opt2)) or isPair(opt2)):
+        if((temp.count('两驱')==len(temp) or temp.count('四驱')==len(temp)) or isPair(temp)):
             break
-        opt2 = opt2[opt2.index(fg2):]
-        opt2 = opt2[opt2.index(fg1):]#每次都切两刀
+        temp = temp[temp.index(fg2):]
+        temp = temp[temp.index(fg1):]#每次都切两刀
 
     #对切割后的对子做判断
-    num1 = opt2[0]  # 四驱还是两驱
+    num1 = temp[0]  # 四驱还是两驱
     if(num1=='四驱'):
         num2  = '两驱'
     else:
         num2 = '四驱'
-    if (opt2.count(num1) < opt2.count(num2)):
+    if (temp.count(num1) < temp.count(num2)):
         if (energyNum == num1):
-            opt2.clear()
-            opt2.extend(temp)
+
             return True
         else:
-            opt2.clear()
-            opt2.extend(temp)
+
             return False
-    elif(opt2.count(num1) == opt2.count(num2)):
+    elif(temp.count(num1) == temp.count(num2)):
         if (energyNum == num1):
-            opt2.clear()
-            opt2.extend(temp)
+
             return True
         else:
             return False
     else:
         if(energyNum == num2):
-            opt2.clear()
-            opt2.extend(temp)
+
             return True
         else:
             return False
